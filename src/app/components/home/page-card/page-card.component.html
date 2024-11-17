@@ -1,19 +1,35 @@
 <div class="filters-container">
   <div class="filter">
     <label for="country">País:</label>
-    <select id="country" [(ngModel)]="selectedCountry" (change)="onCountryChange()">
+    <select
+      id="country"
+      [(ngModel)]="selectedCountry"
+      (change)="onCountryChange()"
+      [isSelected]="!!selectedCountry">
       <option *ngFor="let country of countries" [value]="country">{{ country }}</option>
     </select>
   </div>
+  
   <div class="filter">
     <label for="state">Estado:</label>
-    <select id="state" [(ngModel)]="selectedState" (change)="onStateChange()" [disabled]="!selectedCountry">
+    <select
+      id="state"
+      [(ngModel)]="selectedState"
+      (change)="onStateChange()"
+      [disabled]="!selectedCountry"
+      [isSelected]="!!selectedState">
       <option *ngFor="let state of states" [value]="state">{{ state }}</option>
     </select>
   </div>
+  
   <div class="filter">
     <label for="city">Cidade:</label>
-    <select id="city" [(ngModel)]="selectedCity" (change)="setCityCoordinate($event)" [disabled]="!selectedState">
+    <select
+      id="city"
+      [(ngModel)]="selectedCity"
+      (change)="setCityCoordinate($event)"
+      [disabled]="!selectedState"
+      [isSelected]="!!selectedCity">
       <option *ngFor="let city of cities" [value]="city">{{ city }}</option>
     </select>
   </div>

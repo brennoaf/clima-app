@@ -13,6 +13,7 @@ import { MainCardComponent } from './components/main-card/main-card.component';
 import { TemperatureFormatPipe } from './components/pipes/temp-format.pipe';
 
 import { TemperatureToggleDirective } from './components/directives/temp-toggle.directive';
+import { DynamicStyleDirective } from './components/directives/dynamic-style.directive';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { TemperatureToggleDirective } from './components/directives/temp-toggle.
 
     TemperatureFormatPipe,
 
-    TemperatureToggleDirective
+    TemperatureToggleDirective,
+    DynamicStyleDirective
   ],
   imports: [
     FormsModule,
