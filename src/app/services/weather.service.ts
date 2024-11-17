@@ -11,7 +11,6 @@ export class WeatherService {
   constructor(private http: HttpClient) {}
 
   getWeather(params: any): Observable<any> {
-    // Constructing HttpParams object for query parameters
     let httpParams = new HttpParams();
     for (const key in params) {
       if (Array.isArray(params[key])) {

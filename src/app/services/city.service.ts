@@ -1,3 +1,5 @@
+//queria usar essa api mas não tem lat e long
+
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -11,7 +13,7 @@ export class CityService {
   constructor(private http: HttpClient) {}
 
   getCities(): Observable<any> {
-    return this.http.post<any>(this.baseUrl, {}); // Enviando um objeto vazio para retornar todas as cidades
+    return this.http.post<any>(this.baseUrl, {});
   }
 
   getCityData(city: string): Observable<any> {

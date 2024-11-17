@@ -18,4 +18,35 @@ body{
     background-size: cover;
     background-repeat: no-repeat;
     background-image: url(https://cdn.wallpaperhub.app/cloudcache/6/9/0/e/e/f/690eefe3ba1f553e0ea527f51ee407b604b681b4.jpg);
+
+}
+
+@keyframes back-animation {
+    0% {
+      transform: translateX(-10px);
+    }
+
+    20% {
+        transform: translateX(-5px);
+    }
+
+    40% {
+        transform: translateX(-10px);
+    }
+  
+    70% {
+      transform: translateX(0);
+    }
+
+    80% {
+        transform: translateX(0);
+    }
+
+    90% {
+        transform: translateX(0);
+    }
+
+    100%{
+        transform: translateX(0);
+    }
 }

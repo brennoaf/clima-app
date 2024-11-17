@@ -1,0 +1,78 @@
+.back-button{
+    width: 32px;
+    aspect-ratio: 1;
+
+    font-size: 20px;
+    color: white;
+    border: solid white 1px;
+    border-radius: 100%;
+    background-color: #0056b3;
+    cursor: pointer;
+    animation: back-animation 2s infinite alternate;
+}
+
+.details-container {
+    color: #fff;
+  
+    .details-title {
+        text-align: center;
+        margin-bottom: 1em;
+        color: #ffcc00;
+        font-size: 1.5em;
+    }
+
+    .info-section, .weather-section, .hourly-section {
+        margin-top: 20px;
+
+        .section-title {
+        margin-bottom: 10px;
+        color: #00bcd4;
+        font-size: 1.2em;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        padding-bottom: 5px;
+        }
+    }
+
+    .info-grid, .weather-info-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+    .current-weather {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+
+        .day-indicator {
+        font-weight: bold;
+        padding: 10px;
+        border-radius: 6px;
+        text-align: center;
+
+        &.day {
+            background-color: #ffe066;
+            color: #333;
+        }
+
+        &.night {
+            background-color: #1e3a8a;
+            color: #fff;
+        }
+        }
+    }
+
+    .hourly-info {
+        margin-top: 10px;
+
+        .hourly-item {
+        padding: 5px;
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 5px;
+        margin-bottom: 5px;
+        font-size: 0.9em;
+        }
+    }
+}
+  

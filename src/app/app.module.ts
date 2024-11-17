@@ -7,23 +7,33 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DetailsComponent } from './pages/details/details.component';
 import { HistoryComponent } from './pages/history/history.component';
-import { PageCardComponent } from './components/home/page-card/page-card.component';
+import { HomePageCardComponent } from './components/home/page-card/page-card.component';
 import { MainCardComponent } from './components/main-card/main-card.component';
+
+import { TemperatureFormatPipe } from './components/pipes/temp-format.pipe';
+
+import { TemperatureToggleDirective } from './components/directives/temp-toggle.directive';
 
 @NgModule({
   declarations: [
     AppComponent,
     DetailsComponent,
     HistoryComponent,
-    PageCardComponent,
+    HomePageCardComponent,
     MainCardComponent,
+
+    TemperatureFormatPipe,
+
+    TemperatureToggleDirective
   ],
   imports: [
     FormsModule,
     BrowserModule,
     AppRoutingModule
   ],
-  providers: [provideHttpClient()],
+  providers: [
+    provideHttpClient()
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

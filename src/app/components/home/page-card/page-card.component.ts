@@ -1,15 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { WeatherService } from '../../../services/weather.service';
-import { WeatherIcons } from '../../../../../public/icons/weather-icons';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Router } from '@angular/router';
+
+import { WeatherService } from '../../../services/weather.service';
+
+import { WeatherIcons } from '../../../../../public/icons/weather-icons';
+
 import { LocationsData } from '../../../data/locations.data';
+
+import { HistoryService } from '../../../services/history.service';
 
 @Component({
   selector: 'app-home-page-card',
   templateUrl: './page-card.component.html',
   styleUrls: ['./page-card.component.scss']
 })
-export class PageCardComponent implements OnInit {
+export class HomePageCardComponent implements OnInit {
   countries: string[] = [];
   states: string[] = [];
   cities: string[] = [];
@@ -22,10 +28,21 @@ export class PageCardComponent implements OnInit {
   weatherSvgIcon: any = '';
   error: string = '';
 
-  constructor(private weatherService: WeatherService, private sanitizer: DomSanitizer) {}
+  temperatureUnit: 'C' | 'F' = 'C';
+
+  constructor(
+    private weatherService: WeatherService, 
+    private sanitizer: DomSanitizer, 
+    private router: Router,
+    private historyService: HistoryService
+  ) {}
 
   ngOnInit(): void {
     this.getCountries();
+  }
+
+  toggleTemperatureUnit(): void {
+    this.temperatureUnit = this.temperatureUnit === 'C' ? 'F' : 'C';
   }
 
   getCountries(): void {
@@ -58,6 +75,7 @@ export class PageCardComponent implements OnInit {
       LocationsData[this.selectedCountry][this.selectedState].cities[city]
     ) {
       const { lat, lon } = LocationsData[this.selectedCountry][this.selectedState].cities[city];
+      this.selectedCity = city;
       this.fetchWeather(lat, lon);
     } else {
       console.error('Coordinates not found for city:', city);
@@ -66,22 +84,39 @@ export class PageCardComponent implements OnInit {
 
   fetchWeather(lat: number, lon: number): void {
     if (this.selectedCity) {
-      this.weatherService
-        .getWeather({ latitude: lat, longitude: lon, current_weather: true })
-        .subscribe(
-          data => {
-            this.weatherData = data;
-            const weatherCode = this.getWeatherCondition(data.current_weather.weathercode);
-            const rawSvgIcon = WeatherIcons[weatherCode] || WeatherIcons['Clear'];
-            this.weatherSvgIcon = this.sanitizer.bypassSecurityTrustHtml(rawSvgIcon);
-            this.error = '';
-          },
-          err => {
-            this.error = 'Erro ao obter informações do clima.';
-            console.error(err);
-          }
-        );
+      this.weatherService.getWeather({ 
+        latitude: lat, 
+        longitude: lon, 
+        current_weather: true,
+        hourly: 'temperature_2m',
+        current: 'temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,rain,snowfall,weather_code,wind_speed_10m,wind_direction_10m'
+      }).subscribe(
+        data => {
+          this.weatherData = data;
+          this.saveHistory(data);
+          const weatherCode = this.getWeatherCondition(data.current_weather.weathercode);
+          const rawSvgIcon = WeatherIcons[weatherCode] || WeatherIcons['Clear'];
+          this.weatherSvgIcon = this.sanitizer.bypassSecurityTrustHtml(rawSvgIcon);
+          this.error = '';
+          console.log(data)
+
+          console.log(data)
+        },
+        err => {
+          this.error = 'Erro ao obter informações do clima.';
+          console.error(err);
+        }
+      );
     }
+  }
+
+  saveHistory(data: any): void {
+    this.historyService.addHistory({
+      country: this.selectedCountry,
+      state: this.selectedState,
+      city: this.selectedCity,
+      weatherData: data
+    });
   }
 
   getWeatherCondition(weatherCode: number): string {
@@ -102,10 +137,16 @@ export class PageCardComponent implements OnInit {
   }
 
   goToDetails(): void {
-    // Implement navigation logic
+    if (this.weatherData && this.selectedCity) {
+      // Navega para a rota de detalhes com a cidade selecionada como parâmetro
+      this.router.navigate(['/details'], { queryParams: { city: this.selectedCity } });
+    } else {
+      alert('Nenhuma cidade selecionada ou dados indisponíveis.');
+    }
   }
+  
 
   goToHistory(): void {
-    // Implement navigation logic
+    this.router.navigate(['/history']);
   }
 }

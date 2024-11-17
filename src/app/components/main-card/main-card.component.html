@@ -1,3 +1,5 @@
 <div class="card-content">
-    <app-home-page-card></app-home-page-card>
+    <app-home-page-card *ngIf="currentRoute === '/'"></app-home-page-card>
+    <app-history *ngIf="currentRoute === '/history'"></app-history>
+    <app-details *ngIf="router.url.includes('/details')"></app-details>
 </div>

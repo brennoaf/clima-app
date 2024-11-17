@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PageCardComponent } from './page-card.component';
+import { HomePageCardComponent } from './page-card.component';
 
-describe('PageCardComponent', () => {
-  let component: PageCardComponent;
-  let fixture: ComponentFixture<PageCardComponent>;
+describe('HomePageCardComponent', () => {
+  let component: HomePageCardComponent;
+  let fixture: ComponentFixture<HomePageCardComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [PageCardComponent]
+      declarations: [HomePageCardComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(PageCardComponent);
+    fixture = TestBed.createComponent(HomePageCardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

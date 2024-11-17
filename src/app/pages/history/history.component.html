@@ -1,1 +1,21 @@
-<p>history works!</p>
+<button class="back-button" (click)="backToHome()">
+  <span class="arrow-icon"><</span>
+</button>
+
+<h2 class="history-title">Histórico de Consultas</h2>
+<hr class="entry-divider">
+
+<div *ngIf="history.length > 0; else noHistory" class="history-container">
+  <div *ngFor="let entry of history" class="history-entry">
+    <div class="entry-info">
+      <p><strong>Cidade:</strong> {{ entry.city }}</p>
+      <p><strong>Temperatura:</strong> {{ entry.weatherData.current_weather.temperature }} °C</p>
+      <p><strong>Velocidade do Vento:</strong> {{ entry.weatherData.current_weather.windspeed }} km/h</p>
+      <p><strong>Horário Consultado:</strong> {{ entry.weatherData.current_weather.time }}</p>
+    </div>
+  </div>
+</div>
+
+<ng-template #noHistory>
+  <p class="no-history">Nenhum histórico encontrado.</p>
+</ng-template>

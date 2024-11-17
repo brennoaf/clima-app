@@ -1,1 +1,41 @@
-<p>details works!</p>
+<button class="back-button" (click)="backToHome()">
+  <p><</p>
+</button>
+<div *ngIf="weatherData" class="details-container">
+  <h2 class="details-title">Detalhes da Consulta para {{ weatherData.city }} > {{ weatherData.state }} > {{ weatherData.country }}</h2>
+  
+  <section class="info-section">
+    <h3 class="section-title">Informações Gerais</h3>
+    <div class="info-grid">
+      <div><strong>Latitude:</strong> {{ weatherData.weatherData.latitude }}</div>
+      <div><strong>Longitude:</strong> {{ weatherData.weatherData.longitude }}</div>
+      <div><strong>Timezone:</strong> {{ weatherData.weatherData.timezone }}</div>
+      <div><strong>Elevação:</strong> {{ weatherData.weatherData.elevation }}m</div>
+    </div>
+  </section>
+
+  <section *ngIf="weatherData.weatherData.current_weather" class="weather-section">
+    <h3 class="section-title">Clima Atual</h3>
+    <div class="current-weather">
+      <div class="day-indicator" [ngClass]="{'day': weatherData.weatherData.current_weather.is_day === 1, 'night': weatherData.weatherData.current_weather.is_day === 0}">
+        <p>{{ weatherData.weatherData.current_weather.is_day === 1 ? 'É dia!' : 'É noite!' }}</p>
+      </div>
+      <div class="weather-info-grid">
+        <div><strong>Temperatura:</strong> {{ weatherData.weatherData.current_weather.temperature }} °C</div>
+        <div><strong>Velocidade do Vento:</strong> {{ weatherData.weatherData.current_weather.windspeed }} km/h</div>
+        <div><strong>Direção do Vento:</strong> {{ weatherData.weatherData.current_weather.winddirection }}°</div>
+        <div><strong>Hora:</strong> {{ weatherData.weatherData.current_weather.time }}</div>
+        <div><strong>Código do Tempo:</strong> {{ weatherData.weatherData.current_weather.weathercode }}</div>
+      </div>
+    </div>
+  </section>
+
+  <section *ngIf="weatherData.weatherData.hourly" class="hourly-section">
+    <h3 class="section-title">Informações Horárias</h3>
+    <div class="hourly-info">
+      <div *ngFor="let temp of weatherData.weatherData.hourly.temperature_2m.slice(0, 10); let i = index" class="hourly-item">
+        <p><strong>Hora {{ weatherData.weatherData.hourly.time[i] }}:</strong> {{ temp }} °C</p>
+      </div>
+    </div>
+  </section>
+</div>
